@@ -1,0 +1,188 @@
+/* Archives Page Styles */
+@import './CurrentIssue.css';
+
+.archives-icon {
+  background: rgba(26, 82, 118, 0.08);
+  color: var(--color-secondary);
+}
+
+.archives-intro-text {
+  font-size: var(--font-size-base);
+  color: var(--text-secondary);
+  line-height: 1.8;
+  margin-bottom: var(--space-2xl);
+}
+
+.archive-year-heading {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-md);
+  border-bottom: 2px solid var(--color-gold);
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.archives-issues-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  margin-bottom: var(--space-2xl);
+}
+
+.archive-issue-block {
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.archive-issue-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-lg) var(--space-xl);
+  cursor: pointer;
+  background: var(--bg-card);
+  transition: background var(--transition-fast);
+}
+
+.archive-issue-header-row:hover {
+  background: rgba(26, 82, 118, 0.02);
+}
+
+.archive-issue-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.archive-book-icon {
+  font-size: 1.8rem;
+}
+
+.archive-issue-title-wrap h3 {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.archive-issue-date {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  margin: 2px 0 0 0;
+}
+
+.archive-expand-indicator-btn {
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  color: var(--color-secondary);
+  font-weight: 700;
+  font-size: var(--font-size-xs);
+  cursor: pointer;
+}
+
+.archive-expand-indicator-btn svg {
+  transition: transform var(--transition-fast);
+}
+
+.archive-expand-indicator-btn.active svg {
+  transform: rotate(180deg);
+}
+
+/* Issue Articles Drawer */
+.archive-issue-articles {
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  background: rgba(26, 82, 118, 0.02);
+  padding: var(--space-xl);
+}
+
+.archive-articles-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.archive-article-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: var(--space-md);
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.06);
+  gap: var(--space-xl);
+}
+
+.archive-article-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.archive-article-main {
+  display: flex;
+  gap: var(--space-md);
+}
+
+.archive-article-num {
+  font-size: var(--font-size-sm);
+  font-weight: 700;
+  color: var(--color-gold);
+}
+
+.archive-article-title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+}
+
+.archive-article-authors-text {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin: 0 0 4px 0;
+}
+
+.archive-article-meta-row {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.meta-dot {
+  color: rgba(0,0,0,0.15);
+}
+
+.archive-article-links {
+  flex-shrink: 0;
+}
+
+@media (max-width: 576px) {
+  .archive-issue-header-row {
+    padding: var(--space-md);
+  }
+  
+  .expand-text {
+    display: none;
+  }
+  
+  .archive-article-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
+  
+  .archive-article-links {
+    width: 100%;
+  }
+  
+  .archive-article-links .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

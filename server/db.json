@@ -1,0 +1,70 @@
+[
+  {
+    "id": "vol-1-iss-1",
+    "articles": [
+      {
+        "id": "hbmr-mrqox607",
+        "title": "GREEN TECH AND SDGS: HOW EMERGING TECHNOLOGIES ARE  RESHAPING SUSTAINABLE DEVELOPMENT?",
+        "category": "Entrepreneurship & Innovation",
+        "authors": [
+          {
+            "name": "kishore kesavan",
+            "affiliation": "Marketing"
+          }
+        ],
+        "abstract": "The growth of emerging technologies like blockchain, artificial intelligence (AI), the Internet of Things (IoT), and sophisticated analytics demonstrates the transformative potential of green technology, which has significance in focusing on ecological issues and promoting sustainability. By addressing the prospects and limitations of adopting green technologies, this investigation aims to provide stakeholders seeking to combine technological innovation with sustainable development goals with useful insights. The investigation uses secondary data gathered from previous and current research to offer a comprehensive overview of existing knowledge and concepts guiding the analysis. It focuses on how emerging technologies — blockchain, AI, IoT, and advanced analytics — could encourage sustainable practices across industries including waste management, energy, transportation, agriculture, and food processing. These developments demonstrate green technology's potential to transform a wide range of sectors.",
+        "keywords": [
+          "Green Technology",
+          "Sustainability",
+          "Artificial Intelligence",
+          "Blockchain Technology",
+          "Digitalization",
+          "Innovation"
+        ],
+        "pages": "1-19",
+        "doi": "12/12/2026",
+        "pdfUrl": "/uploads/article-1784398711970-413814916.pdf"
+      }
+    ],
+    "isPublished": true,
+    "issue": 1,
+    "publishDate": "August 2026",
+    "volume": 1,
+    "year": 2026
+  },
+  {
+    "volume": 1,
+    "issue": 2,
+    "year": 2026,
+    "isPublished": true,
+    "publishDate": "september 2026",
+    "articles": [
+      {
+        "id": "hbmr-mruy2sty",
+        "title": "FICIAL INTELLIGENCE (AI) AND THE SUSTAINABLE DEVELOPMENT  GOALS (SDGs): STEERING SUSTAINABLE INNOVATION TOWARD A  RESILIENT AND EQUITABLE FUTURE",
+        "category": "Finance & Accounting",
+        "authors": [
+          {
+            "name": "agiless",
+            "affiliation": "."
+          }
+        ],
+        "abstract": "Among the most encouraging technological advancements, Artificial Intelligence (AI) holds an \r\nopportunity to achieve a number of Sustainable Development Goals (SDGs). It also offers a \r\nnumber of ethical and practical challenges that need to be carefully contemplated, particularly \r\nfor marginalized and impoverished communities. Outlining AI's revolutionary potential \r\nalongside emphasising crucial stages for its morally sound inclusion into sustainable \r\ndevelopment efforts is the goal of this investigation. In order to provide an overview of existing \r\nknowledge and concepts that will direct the investigation, the article makes use of secondary \r\ndata collected from past and current research. Competent AI management, nevertheless, \r\nnecessitates significant effort to ensure that AI systems are free of bias, equitable, and \r\ntransparent, and collaboration between security and AI specialists is vital. The research has \r\nhighlighted a number of theoretical and practical implications for privacy integration and AI \r\ndevelopment. When AI is used efficiently for sustainable innovation, it has the ability to \r\nsubstantially tackle pressing worldwide issues including inequality, resource depletion, and \r\nclimate change. An equilibrium between privacy concerns and AI innovation may be \r\naccomplished by the application of Privacy Enhancing Technologies (PETs).",
+        "keywords": [
+          "Sustainable Development Goals",
+          "Artificial intelligence",
+          "digital technologies",
+          "deep  learning",
+          "sustainable innovation",
+          "environment sustainability",
+          "social sustainability",
+          "economic  sustainability",
+          "etc."
+        ],
+        "pages": "1 - 10",
+        "doi": "12/03/2026",
+        "pdfUrl": "/uploads/article-1784655956085-293890896.pdf"
+      }
+    ]
+  }
+]

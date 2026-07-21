@@ -1,0 +1,77 @@
+/* ===== Layout Styles ===== */
+
+.page-layout {
+  min-height: calc(100vh - 200px);
+}
+
+/* Breadcrumbs */
+.breadcrumbs {
+  background: var(--bg-card);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding: var(--space-sm) 0;
+}
+
+.breadcrumb-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: var(--font-size-sm);
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  margin: 0;
+}
+
+.breadcrumb-item a {
+  color: var(--color-secondary);
+  transition: color var(--transition-fast);
+}
+
+.breadcrumb-item a:hover {
+  color: var(--color-accent);
+}
+
+.breadcrumb-item.current span {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.breadcrumb-sep {
+  margin: 0 var(--space-sm);
+  color: var(--text-light);
+}
+
+/* Layout Grid */
+.layout-grid {
+  display: flex;
+  gap: var(--space-2xl);
+  padding: var(--space-2xl) 0;
+}
+
+.layout-grid.has-sidebar .layout-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.layout-grid:not(.has-sidebar) .layout-main {
+  width: 100%;
+}
+
+.layout-sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+}
+
+@media (max-width: 992px) {
+  .layout-grid {
+    flex-direction: column;
+  }
+
+  .layout-sidebar {
+    width: 100%;
+  }
+}

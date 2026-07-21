@@ -1,0 +1,195 @@
+/* ===== Sidebar Styles ===== */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+  position: sticky;
+  top: 180px;
+  align-self: flex-start;
+}
+
+.sidebar-card {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: box-shadow var(--transition-base);
+}
+
+.sidebar-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.sidebar-title {
+  font-family: var(--font-heading);
+  font-size: var(--font-size-base);
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-sm);
+  border-bottom: 2px solid var(--color-gold);
+  display: inline-block;
+}
+
+/* ISSN Card */
+.issn-card {
+  background: var(--bg-gradient);
+  text-align: center;
+  padding: var(--space-xl);
+}
+
+.issn-badge-large {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.issn-tag {
+  color: var(--color-gold);
+  font-size: var(--font-size-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.issn-number {
+  color: var(--text-white);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  font-family: var(--font-heading);
+  letter-spacing: 0.05em;
+}
+
+/* Journal Info */
+.journal-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.journal-info-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  margin: 0;
+  text-align: left;
+}
+
+.journal-info-list li:last-child {
+  border-bottom: none;
+}
+
+.info-label {
+  font-size: var(--font-size-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* CTA Card */
+.cta-card {
+  background: linear-gradient(135deg, rgba(212,168,67,0.08), rgba(212,168,67,0.02));
+  border: 1px solid rgba(212,168,67,0.2);
+  padding: var(--space-md);
+}
+
+.sidebar-cta-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  padding: 12px 20px;
+  background: var(--bg-gradient-gold);
+  color: var(--color-primary) !important;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+}
+
+.sidebar-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  color: var(--color-primary) !important;
+}
+
+/* Sidebar Links */
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-links li {
+  margin-bottom: 4px;
+}
+
+.sidebar-links a {
+  display: block;
+  padding: 8px 12px;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  text-align: left;
+}
+
+.sidebar-links a:hover {
+  background: rgba(0, 180, 216, 0.06);
+  color: var(--color-accent);
+  padding-left: 16px;
+}
+
+/* Category List */
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+  padding: 6px 0;
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  cursor: default;
+  transition: color var(--transition-fast);
+  text-align: left;
+  margin: 0;
+}
+
+.category-list li:hover {
+  color: var(--color-accent);
+}
+
+.category-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  flex-shrink: 0;
+}
+
+.category-list li:hover .category-dot {
+  background: var(--color-accent);
+}
+
+@media (max-width: 992px) {
+  .sidebar {
+    position: static;
+  }
+}
