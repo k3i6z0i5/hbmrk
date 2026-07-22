@@ -1,69 +1,33 @@
 [
   {
-    "id": "vol-1-iss-1",
-    "articles": [
-      {
-        "id": "hbmr-mrqox607",
-        "title": "GREEN TECH AND SDGS: HOW EMERGING TECHNOLOGIES ARE  RESHAPING SUSTAINABLE DEVELOPMENT?",
-        "category": "Entrepreneurship & Innovation",
-        "authors": [
-          {
-            "name": "kishore kesavan",
-            "affiliation": "Marketing"
-          }
-        ],
-        "abstract": "The growth of emerging technologies like blockchain, artificial intelligence (AI), the Internet of Things (IoT), and sophisticated analytics demonstrates the transformative potential of green technology, which has significance in focusing on ecological issues and promoting sustainability. By addressing the prospects and limitations of adopting green technologies, this investigation aims to provide stakeholders seeking to combine technological innovation with sustainable development goals with useful insights. The investigation uses secondary data gathered from previous and current research to offer a comprehensive overview of existing knowledge and concepts guiding the analysis. It focuses on how emerging technologies — blockchain, AI, IoT, and advanced analytics — could encourage sustainable practices across industries including waste management, energy, transportation, agriculture, and food processing. These developments demonstrate green technology's potential to transform a wide range of sectors.",
-        "keywords": [
-          "Green Technology",
-          "Sustainability",
-          "Artificial Intelligence",
-          "Blockchain Technology",
-          "Digitalization",
-          "Innovation"
-        ],
-        "pages": "1-19",
-        "doi": "12/12/2026",
-        "pdfUrl": "/uploads/article-1784398711970-413814916.pdf"
-      }
-    ],
-    "isPublished": true,
+    "volume": 1,
     "issue": 1,
-    "publishDate": "August 2026",
-    "volume": 1,
-    "year": 2026
-  },
-  {
-    "volume": 1,
-    "issue": 2,
     "year": 2026,
     "isPublished": true,
-    "publishDate": "september 2026",
+    "publishDate": "august 2026",
     "articles": [
       {
-        "id": "hbmr-mruy2sty",
-        "title": "FICIAL INTELLIGENCE (AI) AND THE SUSTAINABLE DEVELOPMENT  GOALS (SDGs): STEERING SUSTAINABLE INNOVATION TOWARD A  RESILIENT AND EQUITABLE FUTURE",
+        "id": "hbmr-mrwapl6h",
+        "title": "E-Performance Management System (e-PMS) as a Strategic Instrument: A Critical  Review",
         "category": "Finance & Accounting",
         "authors": [
           {
-            "name": "agiless",
+            "name": "Dr.A. Anitha",
             "affiliation": "."
           }
         ],
-        "abstract": "Among the most encouraging technological advancements, Artificial Intelligence (AI) holds an \r\nopportunity to achieve a number of Sustainable Development Goals (SDGs). It also offers a \r\nnumber of ethical and practical challenges that need to be carefully contemplated, particularly \r\nfor marginalized and impoverished communities. Outlining AI's revolutionary potential \r\nalongside emphasising crucial stages for its morally sound inclusion into sustainable \r\ndevelopment efforts is the goal of this investigation. In order to provide an overview of existing \r\nknowledge and concepts that will direct the investigation, the article makes use of secondary \r\ndata collected from past and current research. Competent AI management, nevertheless, \r\nnecessitates significant effort to ensure that AI systems are free of bias, equitable, and \r\ntransparent, and collaboration between security and AI specialists is vital. The research has \r\nhighlighted a number of theoretical and practical implications for privacy integration and AI \r\ndevelopment. When AI is used efficiently for sustainable innovation, it has the ability to \r\nsubstantially tackle pressing worldwide issues including inequality, resource depletion, and \r\nclimate change. An equilibrium between privacy concerns and AI innovation may be \r\naccomplished by the application of Privacy Enhancing Technologies (PETs).",
+        "abstract": "Managers utilize performance appraisals to emphasize both the strengths and weaknesses of \r\nemployees, help them improve in areas needing development, and collaboratively establish \r\ncareer advancement goals. Traditional employee behavior and skills have been influenced by \r\nintense competition, emerging technologies, and process re-engineering. To meet these \r\nevolving demands, organizations are increasingly relying on communication technologies to \r\nassess and enhance employee performance and productivity. As the corporate landscape \r\nbecomes more competitive, many companies find it challenging to allocate time for individual \r\nperformance reviews and have turned to electronic performance appraisals instead.\r\nMany organizations are now employing electronic performance management systems (e-PMS) \r\nto monitor employee performance. The term \"e-performance management\" describes how \r\ninformation technology is designed, implemented, and used through a performance \r\nmanagement system (PMS). It is a subset of electronic human resource management (e-HRM) \r\nsystems. By integrating IT into the performance management process, organizations can align \r\ntheir performance management strategies with their overall goals, policies, and practices. The \r\nrelational aspect of e-HRM within e-performance management supports various business \r\nactivities. However, leveraging technology to enhance human performance is a relatively new \r\nand poorly understood endeavor, posing challenges for many organizations.\r\nThe influence of e-PMS in the Indian context has not received much attention, according to a \r\nreview of the literature. Therefore, this study aims to provide an overview of e-PMS, \r\nhighlighting key concerns and strategic initiatives that Indian companies should consider when \r\nsetting objectives to meet the needs and expectations of their workforce",
         "keywords": [
-          "Sustainable Development Goals",
-          "Artificial intelligence",
-          "digital technologies",
-          "deep  learning",
-          "sustainable innovation",
-          "environment sustainability",
-          "social sustainability",
-          "economic  sustainability",
-          "etc."
+          "e-HRM",
+          "E-staffing system",
+          "Performance appraisal process",
+          "performance-oriented  compensation strategies",
+          "e-employee assessment tools",
+          "etc"
         ],
-        "pages": "1 - 10",
-        "doi": "12/03/2026",
-        "pdfUrl": "/uploads/article-1784655956085-293890896.pdf"
+        "pages": "1 - 9",
+        "doi": "vsv",
+        "pdfUrl": "/uploads/article-1784737640816-734004021.pdf"
       }
     ]
   }

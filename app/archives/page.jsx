@@ -13,7 +13,7 @@ const Archives = () => {
   const [expandedCards, setExpandedCards] = useState({})
 
   useEffect(() => {
-    fetch('/api/manuscripts')
+    fetch(`/api/manuscripts?t=${Date.now()}`, { cache: 'no-store' })
       .then(res => res.json())
       .then(data => {
         setManuscripts(data)

@@ -2,10 +2,21 @@ import { NextResponse } from 'next/server';
 import { readDb, saveIssueToFirebase } from '../../../lib/db';
 import { authenticateToken } from '../../../lib/auth';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const db = await readDb();
-    return NextResponse.json(db);
+    return new NextResponse(JSON.stringify(db), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+      },
+    });
   } catch (err) {
     console.error('Error fetching manuscripts:', err);
     return NextResponse.json({ error: 'Failed to fetch database' }, { status: 500 });

@@ -4,6 +4,8 @@ import path from 'path';
 import { readDb, saveIssueToFirebase } from '../../../../../../lib/db';
 import { authenticateToken } from '../../../../../../lib/auth';
 
+export const dynamic = 'force-dynamic';
+
 export async function PATCH(request, { params }) {
   const user = authenticateToken(request);
   if (!user) {

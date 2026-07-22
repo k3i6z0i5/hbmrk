@@ -44,6 +44,10 @@ const Admin = () => {
   const [editAuthors, setEditAuthors] = useState([])
   const [loadingEdit, setLoadingEdit] = useState(false)
 
+  // Edit issue state
+  const [editingIssueKey, setEditingIssueKey] = useState(null)
+  const [editIssueForm, setEditIssueForm] = useState({ year: '', publishDate: '' })
+
   // Loading indicators
   const [loadingIssues, setLoadingIssues] = useState(false)
   const [loadingArticles, setLoadingArticles] = useState(false)
@@ -83,7 +87,7 @@ const Admin = () => {
 
   const fetchData = async () => {
     try {
-      const res = await fetch('/api/manuscripts')
+      const res = await fetch(`/api/manuscripts?t=${Date.now()}`, { cache: 'no-store' })
       const data = await res.json()
       if (Array.isArray(data)) {
         setManuscripts(data)
@@ -355,6 +359,48 @@ const Admin = () => {
     }
   }
 
+  // Handle Edit Issue
+  const handleEditIssueClick = (issueItem) => {
+    const key = `${issueItem.volume}-${issueItem.issue}`
+    if (editingIssueKey === key) {
+      setEditingIssueKey(null)
+      return
+    }
+    setEditingIssueKey(key)
+    setEditIssueForm({
+      year: issueItem.year || '',
+      publishDate: issueItem.publishDate || ''
+    })
+  }
+
+  const handleSaveIssueEdit = async (volume, issue) => {
+    setErrorMessage('')
+    setSuccessMessage('')
+    try {
+      const res = await fetch(`/api/manuscripts/${volume}/${issue}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          year: editIssueForm.year,
+          publishDate: editIssueForm.publishDate
+        })
+      })
+      if (res.ok) {
+        setSuccessMessage(`Issue ${issue} updated successfully!`)
+        setEditingIssueKey(null)
+        fetchData()
+      } else {
+        const data = await res.json()
+        setErrorMessage(data.error || 'Failed to update issue')
+      }
+    } catch (err) {
+      setErrorMessage('Server connection error.')
+    }
+  }
+
   // Handle Delete Article
   const handleDeleteArticle = async (volume, issue, articleId, articleTitle) => {
     if (!window.confirm(`Are you sure you want to permanently delete the article: "${articleTitle}"?`)) {
@@ -374,6 +420,15 @@ const Admin = () => {
 
       if (res.ok) {
         setSuccessMessage('Article deleted successfully from Firebase DB.')
+        setManuscripts(prev => prev.map(item => {
+          if (parseInt(item.volume) === parseInt(volume) && parseInt(item.issue) === parseInt(issue)) {
+            return {
+              ...item,
+              articles: (item.articles || []).filter(a => a.id !== articleId)
+            }
+          }
+          return item
+        }))
         fetchData()
       } else {
         const data = await res.json()
@@ -385,10 +440,12 @@ const Admin = () => {
   }
 
   // Handle Delete Entire Issue
-  const handleDeleteVolume = async (volume, issue) => {
-    const confirmed = window.confirm(
-      `Delete Issue ${issue}?\n\nThis empty issue will be permanently removed from Firebase DB.`
-    )
+  const handleDeleteVolume = async (volume, issue, articleCount = 0) => {
+    const message = articleCount > 0
+      ? `Delete Issue ${issue}?\n\nThis issue and all its ${articleCount} article(s) will be permanently deleted from Firebase DB.`
+      : `Delete Issue ${issue}?\n\nThis empty issue will be permanently removed from Firebase DB.`
+
+    const confirmed = window.confirm(message)
     if (!confirmed) return
 
     setErrorMessage('')
@@ -404,6 +461,7 @@ const Admin = () => {
 
       if (res.ok) {
         setSuccessMessage(`Issue ${issue} permanently deleted from Firebase DB.`)
+        setManuscripts(prev => prev.filter(i => !(parseInt(i.volume) === parseInt(volume) && parseInt(i.issue) === parseInt(issue))))
         fetchData()
       } else {
         const data = await res.json()
@@ -691,6 +749,7 @@ const Admin = () => {
                       <div className="tree-issue-header">
                         <div>
                           <strong>Issue {issue.issue}</strong> ({issue.year})
+                          {issue.publishDate && <span style={{ fontSize: '11px', color: 'var(--text-muted)', marginLeft: '6px' }}>[{issue.publishDate}]</span>}
                           <span className={`issue-status-tag ${issue.isPublished ? 'published' : 'draft'}`}>
                             {issue.isPublished ? 'Published' : 'Draft'}
                           </span>
@@ -702,18 +761,65 @@ const Admin = () => {
                           >
                             {issue.isPublished ? 'Keep as Draft' : 'Make Live'}
                           </button>
-                          {(!issue.articles || issue.articles.length === 0) && (
-                            <button
-                              onClick={() => handleDeleteVolume(issue.volume, issue.issue)}
-                              className="btn-delete-volume"
-                              title="Delete this empty issue"
-                            >
-                              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-                              Delete Issue
-                            </button>
-                          )}
+                          <button
+                            onClick={() => handleEditIssueClick(issue)}
+                            className="btn btn-sm btn-outline"
+                            title="Edit Issue Details"
+                            style={{ fontSize: '11px', padding: '4px 8px' }}
+                          >
+                            {editingIssueKey === `${issue.volume}-${issue.issue}` ? 'Cancel' : '✏ Edit Issue'}
+                          </button>
+                          <button
+                            onClick={() => handleDeleteVolume(issue.volume, issue.issue, issue.articles ? issue.articles.length : 0)}
+                            className="btn-delete-volume"
+                            title="Delete this issue"
+                          >
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+                            Delete Issue
+                          </button>
                         </div>
                       </div>
+
+                      {/* Inline Issue Edit Form */}
+                      {editingIssueKey === `${issue.volume}-${issue.issue}` && (
+                        <div className="inline-edit-form" style={{ marginBottom: '12px' }}>
+                          <div className="form-row">
+                            <div className="form-group">
+                              <label>Year</label>
+                              <input
+                                type="number"
+                                value={editIssueForm.year}
+                                onChange={e => setEditIssueForm({ ...editIssueForm, year: e.target.value })}
+                              />
+                            </div>
+                            <div className="form-group">
+                              <label>Publish Date Label</label>
+                              <input
+                                type="text"
+                                value={editIssueForm.publishDate}
+                                onChange={e => setEditIssueForm({ ...editIssueForm, publishDate: e.target.value })}
+                                placeholder="e.g., September 2026"
+                              />
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', gap: '8px' }}>
+                            <button
+                              type="button"
+                              onClick={() => handleSaveIssueEdit(issue.volume, issue.issue)}
+                              className="btn btn-primary btn-sm"
+                            >
+                              Save Issue Details
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setEditingIssueKey(null)}
+                              className="btn btn-outline btn-sm"
+                            >
+                              Cancel
+                            </button>
+                          </div>
+                        </div>
+                      )}
 
                       <div className="tree-articles-box">
                         {(!issue.articles || issue.articles.length === 0) ? (
