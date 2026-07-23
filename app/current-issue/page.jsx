@@ -76,6 +76,81 @@ const CurrentIssue = () => {
     )
   }
 
+  const handleViewPdf = (pdfUrl, title) => {
+    if (!pdfUrl) {
+      alert('PDF document is not available for this article.');
+      return;
+    }
+
+    if (pdfUrl.startsWith('data:')) {
+      try {
+        const parts = pdfUrl.split(';base64,');
+        const contentType = parts[0].replace('data:', '') || 'application/pdf';
+        const byteCharacters = atob(parts[1]);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: contentType });
+        const blobUrl = URL.createObjectURL(blob);
+
+        const pdfWindow = window.open(blobUrl, '_blank');
+        if (!pdfWindow) {
+          window.location.href = blobUrl;
+        }
+      } catch (e) {
+        console.error('Error opening Base64 PDF:', e);
+        alert('Could not render PDF document.');
+      }
+    } else {
+      window.open(pdfUrl, '_blank');
+    }
+  };
+
+  const handleDownloadPdf = (pdfUrl, title) => {
+    if (!pdfUrl) {
+      alert('PDF document is not available for this article.');
+      return;
+    }
+
+    const filename = `${(title || 'article').replace(/[^a-z0-9]/gi, '_')}.pdf`;
+
+    if (pdfUrl.startsWith('data:')) {
+      try {
+        const parts = pdfUrl.split(';base64,');
+        const contentType = parts[0].replace('data:', '') || 'application/pdf';
+        const byteCharacters = atob(parts[1]);
+        const byteNumbers = new Array(byteCharacters.length);
+        for (let i = 0; i < byteCharacters.length; i++) {
+          byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        const byteArray = new Uint8Array(byteNumbers);
+        const blob = new Blob([byteArray], { type: contentType });
+        const blobUrl = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.href = blobUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
+      } catch (e) {
+        console.error('Error downloading Base64 PDF:', e);
+        alert('Could not download PDF document.');
+      }
+    } else {
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = filename;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+  };
+
   return (
     <Layout sidebar={<Sidebar />} breadcrumbs={[{ label: 'Home', path: '/' }, { label: 'Journals', path: '/current-issue' }]}>
       <div className="current-issue-page animate-fade-in">
@@ -226,14 +301,22 @@ const CurrentIssue = () => {
 
                     {/* Actions with tight margins */}
                     <div className="article-card-actions" style={{ marginTop: '6px', gap: '8px' }}>
-                      <a href={article.pdfUrl} target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-sm" style={{ padding: '6px 12px', fontSize: '12px' }}>
+                      <button
+                        onClick={() => handleViewPdf(article.pdfUrl, article.title)}
+                        className="btn btn-primary btn-sm"
+                        style={{ padding: '6px 12px', fontSize: '12px', cursor: 'pointer' }}
+                      >
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
                         View PDF
-                      </a>
-                      <a href={article.pdfUrl} download className="btn btn-outline btn-sm" style={{ padding: '6px 12px', fontSize: '12px' }}>
+                      </button>
+                      <button
+                        onClick={() => handleDownloadPdf(article.pdfUrl, article.title)}
+                        className="btn btn-outline btn-sm"
+                        style={{ padding: '6px 12px', fontSize: '12px', cursor: 'pointer' }}
+                      >
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
                         Download PDF
-                      </a>
+                      </button>
                     </div>
                   </div>
                 )}
