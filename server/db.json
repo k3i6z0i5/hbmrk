@@ -1,34 +1,11 @@
 [
   {
-    "volume": 1,
-    "issue": 1,
-    "year": 2026,
+    "id": "vol-1-iss-1",
     "isPublished": true,
+    "volume": 1,
     "publishDate": "august 2026",
-    "articles": [
-      {
-        "id": "hbmr-mrwapl6h",
-        "title": "E-Performance Management System (e-PMS) as a Strategic Instrument: A Critical  Review",
-        "category": "Finance & Accounting",
-        "authors": [
-          {
-            "name": "Dr.A. Anitha",
-            "affiliation": "."
-          }
-        ],
-        "abstract": "Managers utilize performance appraisals to emphasize both the strengths and weaknesses of \r\nemployees, help them improve in areas needing development, and collaboratively establish \r\ncareer advancement goals. Traditional employee behavior and skills have been influenced by \r\nintense competition, emerging technologies, and process re-engineering. To meet these \r\nevolving demands, organizations are increasingly relying on communication technologies to \r\nassess and enhance employee performance and productivity. As the corporate landscape \r\nbecomes more competitive, many companies find it challenging to allocate time for individual \r\nperformance reviews and have turned to electronic performance appraisals instead.\r\nMany organizations are now employing electronic performance management systems (e-PMS) \r\nto monitor employee performance. The term \"e-performance management\" describes how \r\ninformation technology is designed, implemented, and used through a performance \r\nmanagement system (PMS). It is a subset of electronic human resource management (e-HRM) \r\nsystems. By integrating IT into the performance management process, organizations can align \r\ntheir performance management strategies with their overall goals, policies, and practices. The \r\nrelational aspect of e-HRM within e-performance management supports various business \r\nactivities. However, leveraging technology to enhance human performance is a relatively new \r\nand poorly understood endeavor, posing challenges for many organizations.\r\nThe influence of e-PMS in the Indian context has not received much attention, according to a \r\nreview of the literature. Therefore, this study aims to provide an overview of e-PMS, \r\nhighlighting key concerns and strategic initiatives that Indian companies should consider when \r\nsetting objectives to meet the needs and expectations of their workforce",
-        "keywords": [
-          "e-HRM",
-          "E-staffing system",
-          "Performance appraisal process",
-          "performance-oriented  compensation strategies",
-          "e-employee assessment tools",
-          "etc"
-        ],
-        "pages": "1 - 9",
-        "doi": "vsv",
-        "pdfUrl": "/uploads/article-1784737640816-734004021.pdf"
-      }
-    ]
+    "year": 2026,
+    "issue": 1,
+    "articles": []
   }
 ]

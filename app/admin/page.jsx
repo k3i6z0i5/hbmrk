@@ -202,7 +202,13 @@ const Admin = () => {
       })
       if (res.ok) {
         setSuccessMessage(`Issue status updated to ${!currentStatus ? 'Published' : 'Draft'}`)
-        fetchData()
+        setManuscripts(prev => prev.map(item => {
+          if (parseInt(item.volume) === parseInt(volume) && parseInt(item.issue) === parseInt(issue)) {
+            return { ...item, isPublished: !currentStatus }
+          }
+          return item
+        }))
+        setTimeout(() => fetchData(), 500)
       } else {
         const data = await res.json()
         setErrorMessage(data.error || 'Failed to update status')
@@ -288,7 +294,7 @@ const Admin = () => {
         setPdfFile(null)
         const fileInput = document.getElementById('pdf-file-input')
         if (fileInput) fileInput.value = ''
-        fetchData()
+        setTimeout(() => fetchData(), 500)
       } else {
         setErrorMessage(data.error || 'Failed to upload article')
       }
@@ -347,7 +353,30 @@ const Admin = () => {
       if (res.ok) {
         setSuccessMessage('Article updated successfully in Firebase DB!')
         setEditingArticleId(null)
-        fetchData()
+        setManuscripts(prev => prev.map(item => {
+          if (parseInt(item.volume) === parseInt(editForm.volume) && parseInt(item.issue) === parseInt(editForm.issue)) {
+            return {
+              ...item,
+              articles: (item.articles || []).map(a => {
+                if (String(a.id) === String(articleId)) {
+                  return {
+                    ...a,
+                    title: editForm.title,
+                    category: editForm.category,
+                    abstract: editForm.abstract,
+                    keywords: editForm.keywords.split(',').map(k => k.trim()).filter(Boolean),
+                    pages: editForm.pages,
+                    doi: editForm.doi,
+                    authors: editAuthors.filter(a => a.name.trim() !== '')
+                  }
+                }
+                return a
+              })
+            }
+          }
+          return item
+        }))
+        setTimeout(() => fetchData(), 500)
       } else {
         const data = await res.json()
         setErrorMessage(data.error || 'Failed to update article')
@@ -391,7 +420,17 @@ const Admin = () => {
       if (res.ok) {
         setSuccessMessage(`Issue ${issue} updated successfully!`)
         setEditingIssueKey(null)
-        fetchData()
+        setManuscripts(prev => prev.map(item => {
+          if (parseInt(item.volume) === parseInt(volume) && parseInt(item.issue) === parseInt(issue)) {
+            return {
+              ...item,
+              year: parseInt(editIssueForm.year),
+              publishDate: editIssueForm.publishDate
+            }
+          }
+          return item
+        }))
+        setTimeout(() => fetchData(), 500)
       } else {
         const data = await res.json()
         setErrorMessage(data.error || 'Failed to update issue')
@@ -424,12 +463,12 @@ const Admin = () => {
           if (parseInt(item.volume) === parseInt(volume) && parseInt(item.issue) === parseInt(issue)) {
             return {
               ...item,
-              articles: (item.articles || []).filter(a => a.id !== articleId)
+              articles: (item.articles || []).filter(a => String(a.id) !== String(articleId))
             }
           }
           return item
         }))
-        fetchData()
+        setTimeout(() => fetchData(), 500)
       } else {
         const data = await res.json()
         setErrorMessage(data.error || 'Failed to delete article')
@@ -462,7 +501,7 @@ const Admin = () => {
       if (res.ok) {
         setSuccessMessage(`Issue ${issue} permanently deleted from Firebase DB.`)
         setManuscripts(prev => prev.filter(i => !(parseInt(i.volume) === parseInt(volume) && parseInt(i.issue) === parseInt(issue))))
-        fetchData()
+        setTimeout(() => fetchData(), 500)
       } else {
         const data = await res.json()
         setErrorMessage(data.error || 'Failed to delete issue')

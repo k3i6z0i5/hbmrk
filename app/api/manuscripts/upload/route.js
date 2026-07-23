@@ -64,21 +64,27 @@ export async function POST(request) {
       parsedKeywords = keywords ? keywords.split(',').map(k => k.trim()) : [];
     }
 
-    // Ensure uploads directory exists inside public/
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-
-    // Save PDF file
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-    const ext = path.extname(pdf.name || 'document.pdf') || '.pdf';
-    const filename = `article-${uniqueSuffix}${ext}`;
-    const filepath = path.join(uploadsDir, filename);
-
+    // Convert PDF to Base64 Data URL for persistent cloud/serverless storage
     const bytes = await pdf.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    fs.writeFileSync(filepath, buffer);
+    const base64Pdf = `data:application/pdf;base64,${buffer.toString('base64')}`;
+
+    let pdfUrl = base64Pdf;
+
+    // Try saving locally if writable (for local dev environment)
+    try {
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+      const ext = path.extname(pdf.name || 'document.pdf') || '.pdf';
+      const filename = `article-${uniqueSuffix}${ext}`;
+      const filepath = path.join(uploadsDir, filename);
+      fs.writeFileSync(filepath, buffer);
+    } catch (fsErr) {
+      // Expected in Vercel serverless environment (read-only filesystem)
+    }
 
     const newArticle = {
       id: 'hbmr-' + Date.now().toString(36),
@@ -89,7 +95,7 @@ export async function POST(request) {
       keywords: parsedKeywords,
       pages: pages || 'N/A',
       doi: doi || '',
-      pdfUrl: `/uploads/${filename}`
+      pdfUrl: pdfUrl
     };
 
     if (!targetIssue.articles) targetIssue.articles = [];
