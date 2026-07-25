@@ -27,11 +27,8 @@ const AboutContent = () => {
 
   const advisoryBoard = [
     { name: 'Dr. Suresh Paul Antony', title: 'Associate Professor', institution: 'Indian Institute of Management (IIM) Tiruchirappalli, Tamilnadu, India', initials: 'SA', color: '#1a5276' },
-    { name: 'Gurudas Nulkar', title: 'Professor, Director Centre for Sustainable Development', institution: 'Gokhale Institute of Politics and Economics, Pune, Maharashtra, India', initials: 'GN', color: '#00b4d8' },
-    { name: 'Dr. R. Venkatesakumar', title: 'HOD, Department of Management Studies (DMS)', institution: 'Pondicherry University, Puducherry, India', initials: 'RV', color: '#d4a843' },
     { name: 'Dr. Sivarethinamohan R', title: 'Professor', institution: 'Symbiosis Centre for Management Studies, Bengaluru campus, Symbiosis International (Deemed University), Pune, India', initials: 'SR', color: '#2ecc71' },
     { name: 'Dr. S. N. Raghavendra', title: 'PGP Chair & Associate Professor', institution: 'Bharathidasan Institute of Management (BIM), Tiruchirappalli, Tamilnadu, India', initials: 'SR', color: '#e74c3c' },
-    { name: 'Dr. Preethi Baligar', title: 'Associate Professor, School of Computing', institution: 'MIT Vishwaprayag University, Solapur, Maharashtra, India', initials: 'PB', color: '#9b59b6' },
   ]
 
   return (
