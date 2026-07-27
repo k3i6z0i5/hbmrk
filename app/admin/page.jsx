@@ -249,7 +249,7 @@ const Admin = () => {
     }
 
     if (!pdfFile) {
-      setErrorMessage('Please select a PDF file to upload.')
+      setErrorMessage('Please select a PDF or Word document (.doc/.docx) to upload.')
       setLoadingArticles(false)
       return
     }
@@ -757,15 +757,15 @@ const Admin = () => {
                 </div>
 
                 <div className="form-group">
-                  <label>Manuscript PDF File *</label>
+                  <label>Manuscript File (PDF or Word Document) *</label>
                   <input
                     type="file"
                     id="pdf-file-input"
-                    accept="application/pdf"
+                    accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                     onChange={(e) => setPdfFile(e.target.files[0])}
                     required
                   />
-                  <p className="file-help">Only PDF documents are accepted.</p>
+                  <p className="file-help">PDF and Word documents (.pdf, .doc, .docx) are accepted.</p>
                 </div>
 
                 <button type="submit" className="btn btn-accent btn-block" disabled={loadingArticles}>

@@ -21,7 +21,7 @@ export async function POST(request) {
     const keywords = formData.get('keywords');
     const pages = formData.get('pages');
     const doi = formData.get('doi');
-    const pdf = formData.get('pdf');
+    const pdf = formData.get('pdf') || formData.get('file');
 
     if (!volume || !issue || !title || !authors || !abstract) {
       return NextResponse.json(
@@ -31,11 +31,20 @@ export async function POST(request) {
     }
 
     if (!pdf || typeof pdf === 'string') {
-      return NextResponse.json({ error: 'PDF file is required.' }, { status: 400 });
+      return NextResponse.json({ error: 'Manuscript file (PDF or Word document) is required.' }, { status: 400 });
     }
 
-    if (pdf.type !== 'application/pdf') {
-      return NextResponse.json({ error: 'Only PDF files are allowed!' }, { status: 400 });
+    const allowedMimeTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/x-msword'
+    ];
+    const fileExt = path.extname(pdf.name || '').toLowerCase();
+    const isAllowed = allowedMimeTypes.includes(pdf.type) || ['.pdf', '.doc', '.docx'].includes(fileExt);
+
+    if (!isAllowed) {
+      return NextResponse.json({ error: 'Only PDF, DOC, and DOCX files are allowed!' }, { status: 400 });
     }
 
     const db = await readDb();
@@ -64,12 +73,13 @@ export async function POST(request) {
       parsedKeywords = keywords ? keywords.split(',').map(k => k.trim()) : [];
     }
 
-    // Convert PDF to Base64 Data URL for persistent cloud/serverless storage
+    // Convert PDF/Word doc to Base64 Data URL for persistent cloud/serverless storage
     const bytes = await pdf.arrayBuffer();
     const buffer = Buffer.from(bytes);
-    const base64Pdf = `data:application/pdf;base64,${buffer.toString('base64')}`;
+    const mimeType = pdf.type || (fileExt === '.docx' ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' : fileExt === '.doc' ? 'application/msword' : 'application/pdf');
+    const base64File = `data:${mimeType};base64,${buffer.toString('base64')}`;
 
-    let pdfUrl = base64Pdf;
+    let pdfUrl = base64File;
 
     // Try saving locally if writable (for local dev environment)
     try {
