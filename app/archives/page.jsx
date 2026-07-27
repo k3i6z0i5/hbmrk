@@ -43,15 +43,13 @@ const Archives = () => {
       return;
     }
 
-    if (isDocFile(pdfUrl)) {
-      handleDownloadPdf(pdfUrl, title);
-      return;
-    }
-
     if (pdfUrl.startsWith('data:')) {
       try {
         const parts = pdfUrl.split(';base64,');
-        const contentType = parts[0].replace('data:', '') || 'application/pdf';
+        const defaultType = isDocFile(pdfUrl) 
+          ? 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' 
+          : 'application/pdf';
+        const contentType = parts[0].replace('data:', '') || defaultType;
         const byteCharacters = atob(parts[1]);
         const byteNumbers = new Array(byteCharacters.length);
         for (let i = 0; i < byteCharacters.length; i++) {
@@ -66,7 +64,7 @@ const Archives = () => {
           window.location.href = blobUrl;
         }
       } catch (e) {
-        console.error('Error opening Base64 PDF:', e);
+        console.error('Error opening Base64 document:', e);
         alert('Could not render document.');
       }
     } else {
@@ -314,14 +312,24 @@ const Archives = () => {
                     {/* Actions with tight margins */}
                     <div className="article-card-actions" style={{ marginTop: '6px', gap: '8px' }}>
                       {isDocFile(article.pdfUrl) ? (
-                        <button
-                          onClick={() => handleDownloadPdf(article.pdfUrl, article.title)}
-                          className="btn btn-primary btn-sm"
-                          style={{ padding: '6px 12px', fontSize: '12px', cursor: 'pointer' }}
-                        >
-                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                          Download Manuscript (.docx)
-                        </button>
+                        <>
+                          <button
+                            onClick={() => handleViewPdf(article.pdfUrl, article.title)}
+                            className="btn btn-primary btn-sm"
+                            style={{ padding: '6px 12px', fontSize: '12px', cursor: 'pointer' }}
+                          >
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                            View Word Doc
+                          </button>
+                          <button
+                            onClick={() => handleDownloadPdf(article.pdfUrl, article.title)}
+                            className="btn btn-outline btn-sm"
+                            style={{ padding: '6px 12px', fontSize: '12px', cursor: 'pointer' }}
+                          >
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            Download Word Doc
+                          </button>
+                        </>
                       ) : (
                         <>
                           <button
