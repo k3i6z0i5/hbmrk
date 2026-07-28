@@ -46,36 +46,30 @@ export async function DELETE(request, { params }) {
 
   try {
     const { volume, issue } = await params;
-    const db = await readDb();
 
-    const targetIssue = db.find(
-      item => parseInt(item.volume) === parseInt(volume) && parseInt(item.issue) === parseInt(issue)
-    );
-
-    if (!targetIssue) {
-      return NextResponse.json({ error: 'Issue not found' }, { status: 404 });
-    }
-
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-
-    // Delete all PDFs associated with articles in this issue
-    if (targetIssue.articles) {
-      targetIssue.articles.forEach(article => {
-        if (article.pdfUrl && article.pdfUrl.startsWith('/uploads/')) {
-          const filename = article.pdfUrl.replace('/uploads/', '');
-          const filepath = path.join(uploadsDir, filename);
-          if (fs.existsSync(filepath)) {
+    // Try to clean up local PDF files (will silently skip on Vercel)
+    try {
+      const dbData = await readDb();
+      const targetIssue = dbData.find(
+        item => parseInt(item.volume) === parseInt(volume) && parseInt(item.issue) === parseInt(issue)
+      );
+      if (targetIssue && targetIssue.articles) {
+        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+        targetIssue.articles.forEach(article => {
+          if (article.pdfUrl && article.pdfUrl.startsWith('/uploads/')) {
+            const filename = article.pdfUrl.replace('/uploads/', '');
+            const filepath = path.join(uploadsDir, filename);
             try {
-              fs.unlinkSync(filepath);
-            } catch (err) {
-              console.error(`Error deleting PDF for article ${article.id}:`, err);
-            }
+              if (fs.existsSync(filepath)) fs.unlinkSync(filepath);
+            } catch (e) { /* ignore file cleanup errors */ }
           }
-        }
-      });
+        });
+      }
+    } catch (readErr) {
+      console.warn('Non-critical: Could not read DB for file cleanup:', readErr.message);
     }
 
-    // Delete issue document from Firebase Firestore
+    // Delete issue document from Firebase Firestore (this is the critical operation)
     await deleteIssueFromFirebase(volume, issue);
 
     return NextResponse.json({
@@ -83,6 +77,6 @@ export async function DELETE(request, { params }) {
     });
   } catch (err) {
     console.error('Delete volume error:', err);
-    return NextResponse.json({ error: 'Failed to process deletion' }, { status: 500 });
+    return NextResponse.json({ error: `Deletion failed: ${err.message || 'Unknown server error'}` }, { status: 500 });
   }
 }

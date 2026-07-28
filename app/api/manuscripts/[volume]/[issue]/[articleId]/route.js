@@ -60,9 +60,9 @@ export async function DELETE(request, { params }) {
 
   try {
     const { volume, issue, articleId } = await params;
-    const db = await readDb();
+    const dbData = await readDb();
 
-    const targetIssue = db.find(
+    const targetIssue = dbData.find(
       item => parseInt(item.volume) === parseInt(volume) && parseInt(item.issue) === parseInt(issue)
     );
 
@@ -70,26 +70,22 @@ export async function DELETE(request, { params }) {
       return NextResponse.json({ error: 'Issue not found' }, { status: 404 });
     }
 
-    const articleIndex = targetIssue.articles ? targetIssue.articles.findIndex(a => a.id === articleId) : -1;
+    const articleIndex = targetIssue.articles ? targetIssue.articles.findIndex(a => String(a.id) === String(articleId)) : -1;
     if (articleIndex === -1) {
       return NextResponse.json({ error: 'Article not found' }, { status: 404 });
     }
 
     const article = targetIssue.articles[articleIndex];
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
 
-    // Try to delete physical PDF file
-    if (article.pdfUrl && article.pdfUrl.startsWith('/uploads/')) {
-      const filename = article.pdfUrl.replace('/uploads/', '');
-      const filepath = path.join(uploadsDir, filename);
-      if (fs.existsSync(filepath)) {
-        try {
-          fs.unlinkSync(filepath);
-        } catch (err) {
-          console.error('Error deleting PDF file:', err);
-        }
+    // Try to delete physical PDF file (silently skip on Vercel)
+    try {
+      if (article.pdfUrl && article.pdfUrl.startsWith('/uploads/')) {
+        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+        const filename = article.pdfUrl.replace('/uploads/', '');
+        const filepath = path.join(uploadsDir, filename);
+        if (fs.existsSync(filepath)) fs.unlinkSync(filepath);
       }
-    }
+    } catch (e) { /* ignore file cleanup errors */ }
 
     // Remove article from db list
     targetIssue.articles.splice(articleIndex, 1);
@@ -98,6 +94,6 @@ export async function DELETE(request, { params }) {
     return NextResponse.json({ message: 'Article deleted successfully from Firebase DB' });
   } catch (err) {
     console.error('Delete article error:', err);
-    return NextResponse.json({ error: 'Failed to process deletion' }, { status: 500 });
+    return NextResponse.json({ error: `Deletion failed: ${err.message || 'Unknown server error'}` }, { status: 500 });
   }
 }
