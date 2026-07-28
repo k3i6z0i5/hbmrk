@@ -66,7 +66,7 @@ const Contact = () => {
                     <strong>Phone:</strong> <a href="tel:9750991371">9750991371</a>
                   </p>
                   <p className="contact-card-text">
-                    <strong>Email:</strong> <a href="mailto:editorHBMR@hbs.ac.in">editorHBMR@hbs.ac.in</a>
+                    <strong>Email:</strong> <a href="mailto:editorhmbr@hbs.ac.in">editorhmbr@hbs.ac.in</a>
                   </p>
                 </div>
               </div>
